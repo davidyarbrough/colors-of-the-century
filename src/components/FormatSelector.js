@@ -16,8 +16,8 @@ const FormatSelector = ({ format, onFormatChange }) => {
         onChange={(e) => onFormatChange(e.target.value)}
         aria-label="Select date format"
       >
-        <option value="normal">Normal (DDMMYY)</option>
-        <option value="american">American (MMDDYY)</option>
+        <option value="normal">Normal</option>
+        <option value="american">American</option>
       </select>
     </div>
   );
