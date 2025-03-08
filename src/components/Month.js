@@ -1,7 +1,25 @@
 import React from 'react';
 import '../styles/Month.css';
 
-const Month = ({ monthName, monthIndex, year, onDateSelect, getColorCode }) => {
+/**
+ * Month component that displays a single month of a calendar
+ * @param {string} monthName - The name of the month
+ * @param {number} monthIndex - The index of the month (1-12)
+ * @param {number} year - The year
+ * @param {function} onDateSelect - Function to handle date selection
+ * @param {function} getColorCode - Function to get the color code for a date
+ * @param {function} getAltColorCode - Function to get the alternative color code for special dates
+ * @param {function} hasBicolorDisplay - Function to check if a date has a bicolor display
+ */
+const Month = ({ 
+  monthName, 
+  monthIndex, 
+  year, 
+  onDateSelect, 
+  getColorCode,
+  getAltColorCode,
+  hasBicolorDisplay
+}) => {
   // Function to get days in month
   const getDaysInMonth = (month, year) => {
     return new Date(year, month, 0).getDate();
@@ -31,16 +49,39 @@ const Month = ({ monthName, monthIndex, year, onDateSelect, getColorCode }) => {
   // Add cells for each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
     const colorCode = getColorCode(day, monthIndex, year);
-    days.push(
-      <div 
-        key={`day-${day}`} 
-        className="day" 
-        style={{ backgroundColor: colorCode }}
-        onClick={() => onDateSelect(day, monthIndex)}
-      >
-        {day}
-      </div>
-    );
+    const isBicolorDay = hasBicolorDisplay(day, monthIndex);
+    
+    if (isBicolorDay) {
+      const altColorCode = getAltColorCode(day, monthIndex, year);
+      days.push(
+        <div 
+          key={`day-${day}`} 
+          className="day bicolor-day" 
+          onClick={() => onDateSelect(day, monthIndex)}
+        >
+          <div className="day-content">{day}</div>
+          <div 
+            className="primary-color" 
+            style={{ backgroundColor: colorCode }}
+          ></div>
+          <div 
+            className="alt-color" 
+            style={{ backgroundColor: altColorCode }}
+          ></div>
+        </div>
+      );
+    } else {
+      days.push(
+        <div 
+          key={`day-${day}`} 
+          className="day" 
+          style={{ backgroundColor: colorCode }}
+          onClick={() => onDateSelect(day, monthIndex)}
+        >
+          {day}
+        </div>
+      );
+    }
   }
 
   return (
