@@ -19,6 +19,15 @@
   font-size: 1rem;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
 .color-info {
   display: flex;
   align-items: center;

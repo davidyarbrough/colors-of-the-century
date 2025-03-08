@@ -2,13 +2,23 @@ import React, { useState } from 'react';
 import './App.css';
 import Calendar from './components/Calendar';
 import YearInput from './components/YearInput';
+import FormatSelector from './components/FormatSelector';
 
+/**
+ * Main application component
+ */
 function App() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [selectedDate, setSelectedDate] = useState(null);
+  const [format, setFormat] = useState('normal'); // 'normal' or 'american'
 
   const handleYearChange = (newYear) => {
     setYear(newYear);
+    setSelectedDate(null);
+  };
+
+  const handleFormatChange = (newFormat) => {
+    setFormat(newFormat);
     setSelectedDate(null);
   };
 
@@ -16,28 +26,47 @@ function App() {
     setSelectedDate({ day, month, year });
   };
 
+  /**
+   * Generate color code based on date and selected format
+   * @param {number} day - Day of the month
+   * @param {number} month - Month number (1-12)
+   * @param {number} year - Year
+   * @returns {string} Hex color code
+   */
   const getColorCode = (day, month, year) => {
     // Format day, month, and last two digits of year as two-digit numbers
     const dayStr = day.toString().padStart(2, '0');
     const monthStr = month.toString().padStart(2, '0');
     const yearStr = (year % 100).toString().padStart(2, '0');
     
-    // Create hex color code
-    return `#${dayStr}${monthStr}${yearStr}`;
+    // Create hex color code based on format
+    if (format === 'normal') {
+      return `#${dayStr}${monthStr}${yearStr}`; // DDMMYY
+    } else {
+      return `#${monthStr}${dayStr}${yearStr}`; // MMDDYY for American format
+    }
   };
 
-  // Function to get alternative color code for special days
+  /**
+   * Generate alternative color code for special days
+   * @param {number} day - Day of the month
+   * @param {number} month - Month number (1-12)
+   * @param {number} year - Year
+   * @returns {string|null} Alternative hex color code or null if not applicable
+   */
   const getAltColorCode = (day, month, year) => {
     // Only first 9 days of February (2) and December (12) have alternative colors
     if ((month === 2 || month === 12) && day <= 9) {
-      // For these days, we use the format #DMONYR where:
-      // D is the day (single digit)
-      // MON is the first 3 letters of the month (FEB or DEC)
-      // YR is the last 2 digits of the year
       const monthCode = month === 2 ? 'FEB' : 'DEC';
       const yearStr = (year % 100).toString().padStart(2, '0');
       
-      return `#${day}${monthCode}${yearStr}`;
+      if (format === 'normal') {
+        // For normal format, alt color is #DMONYR
+        return `#${day}${monthCode}${yearStr}`;
+      } else {
+        // For American format, alt color is #MMMDYR
+        return `#${monthCode}${day}${yearStr}`;
+      }
     }
     return null;
   };
@@ -52,13 +81,16 @@ function App() {
       <header className="app-header">
         <h1>Colors of the Century</h1>
         <p className="app-description">
-          Each day is colored with its hex code in #DDMMYY format
+          Each day is colored with its hex code in {format === 'normal' ? '#DDMMYY' : '#MMDDYY'} format
           <br />
           <small>The first 9 days of February and December have two color representations!</small>
         </p>
       </header>
 
-      <YearInput year={year} onYearChange={handleYearChange} />
+      <div className="controls">
+        <FormatSelector format={format} onFormatChange={handleFormatChange} />
+        <YearInput year={year} onYearChange={handleYearChange} />
+      </div>
 
       <div className="color-info">
         {selectedDate ? (

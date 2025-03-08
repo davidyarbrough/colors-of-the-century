@@ -1,0 +1,26 @@
+import React from 'react';
+import '../styles/FormatSelector.css';
+
+/**
+ * Component for selecting the date format
+ * @param {string} format - Current selected format ('normal' or 'american')
+ * @param {function} onFormatChange - Function to handle format change
+ */
+const FormatSelector = ({ format, onFormatChange }) => {
+  return (
+    <div className="format-selector">
+      <label htmlFor="format-select">Format:</label>
+      <select 
+        id="format-select" 
+        value={format} 
+        onChange={(e) => onFormatChange(e.target.value)}
+        aria-label="Select date format"
+      >
+        <option value="normal">Normal (DDMMYY)</option>
+        <option value="american">American (MMDDYY)</option>
+      </select>
+    </div>
+  );
+};
+
+export default FormatSelector;

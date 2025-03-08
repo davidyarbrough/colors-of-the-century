@@ -1,0 +1,25 @@
+.format-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.format-selector label {
+  font-weight: bold;
+  color: #333;
+}
+
+.format-selector select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+}
+
+.format-selector select:focus {
+  outline: none;
+  border-color: #4a6fa5;
+  box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+}
