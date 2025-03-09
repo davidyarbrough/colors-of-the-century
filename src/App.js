@@ -3,6 +3,7 @@ import './App.css';
 import Calendar from './components/Calendar';
 import YearInput from './components/YearInput';
 import FormatSelector from './components/FormatSelector';
+import getColorName from './utils/colorNameMapper';
 
 /**
  * Main application component
@@ -61,10 +62,10 @@ function App() {
       const yearStr = (year % 100).toString().padStart(2, '0');
       
       if (format === 'normal') {
-        // For normal format, alt color is #DMONYR
+        // For normal format, bicolor is #DMONYR
         return `#${day}${monthCode}${yearStr}`;
       } else {
-        // For American format, alt color is #MMMDYR
+        // For American format, bicolor is #MMMDYR
         return `#${monthCode}${day}${yearStr}`;
       }
     }
@@ -101,10 +102,14 @@ function App() {
               {selectedDate.year}
             </div>
             <div className="color-display">
-              Color: {getColorCode(selectedDate.day, selectedDate.month, selectedDate.year)}
+              <div className="color-info-row">
+                <div>Color: {getColorCode(selectedDate.day, selectedDate.month, selectedDate.year)}</div>
+                <div className="color-name">{getColorName(getColorCode(selectedDate.day, selectedDate.month, selectedDate.year))}</div>
+              </div>
               {hasBicolorDisplay(selectedDate.day, selectedDate.month) && (
-                <div className="alt-color-display">
-                  Alt Color: {getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year)}
+                <div className="color-info-row alt-color-display">
+                  <div>Bi Color: {getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year)}</div>
+                  <div className="color-name">{getColorName(getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year))}</div>
                 </div>
               )}
             </div>
