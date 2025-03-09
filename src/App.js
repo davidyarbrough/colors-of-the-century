@@ -43,8 +43,10 @@ function App() {
     // Create hex color code based on format
     if (format === 'normal') {
       return `#${dayStr}${monthStr}${yearStr}`; // DDMMYY
-    } else {
+    } else if (format === 'american') {
       return `#${monthStr}${dayStr}${yearStr}`; // MMDDYY for American format
+    } else { // lexical format
+      return `#${yearStr}${monthStr}${dayStr}`; // YYMMDD for Lexical format
     }
   };
 
@@ -64,9 +66,12 @@ function App() {
       if (format === 'normal') {
         // For normal format, bicolor is #DMONYR
         return `#${day}${monthCode}${yearStr}`;
-      } else {
+      } else if (format === 'american') {
         // For American format, bicolor is #MMMDYR
         return `#${monthCode}${day}${yearStr}`;
+      } else {
+        // For Lexical format, bicolor is #YYMMMd
+        return `#${yearStr}${monthCode}${day}`;
       }
     }
     return null;
@@ -82,7 +87,8 @@ function App() {
       <header className="app-header">
         <h1>Colors of the Century</h1>
         <p className="app-description">
-          Each day is colored with its hex code in {format === 'normal' ? '#DDMMYY' : '#MMDDYY'} format
+          Each day is colored with its hex code in 
+          {format === 'normal' ? '#DDMMYY' : format === 'american' ? '#MMDDYY' : '#YYMMDD'} format
           <br />
           <small>The first 9 days of February and December have two color representations!</small>
         </p>

@@ -1,21 +1,52 @@
 # Colors of the Century
 
-A simple calendar display application that shows a calendar view where each day is colored with a hex code derived from its date in the format DDMMYY.
+A calendar visualization application that displays each day colored with a hex code derived from its date, supporting multiple date formats.
 
 ## Description
 
 This application allows users to:
 - Input a year number
+- Select from multiple date formats
 - View a calendar for that year
-- See each day colored with its unique hex color code based on the date
-- Click on days to see the exact color code
+- See each day colored with its unique hex color code based on the date format
+- Click on days to see the exact color code and color name
+- Experience special bicolor days for the first 9 days of February and December
 
-## How It Works
+## Date Formats and Color Mapping
 
-- Each day's color is determined by its date in the format #DDMMYY
-- For example, January 1, 2025 would be colored #010125
-- The application displays all 12 months of the selected year
-- The app is built as a static React webpage, making it accessible from any browser
+The application supports three different date formats, each generating unique colors:
+
+### 1. Normal Format (DDMMYY)
+- Day followed by month followed by year
+- Example: January 1, 2025 would be colored `#010125`
+- Bicolor format for special days: `#DMONYR` (e.g., February 3, 2025 would have an alternate color of `#3FEB25`)
+
+### 2. American Format (MMDDYY)
+- Month followed by day followed by year
+- Example: January 1, 2025 would be colored `#010125`
+- Bicolor format for special days: `#MMMDYR` (e.g., February 3, 2025 would have an alternate color of `#FEB325`)
+
+### 3. Lexical Format (YYMMDD)
+- Year followed by month followed by day
+- Example: January 1, 2025 would be colored `#250101`
+- Bicolor format for special days: `#YYMMMd` (e.g., February 3, 2025 would have an alternate color of `#25FEB3`)
+
+## Special Bicolor Days
+
+The first 9 days of February and December have two color representations:
+
+1. **Standard Format**: Based on the selected date format (DDMMYY, MMDDYY, or YYMMDD)
+2. **Alternative Format**: Using a special format that includes the month name abbreviation
+
+These special days are displayed with a diagonal split showing both colors, enhancing the visual experience and educational value of the application.
+
+## Color Naming System
+
+Each hex color code is mapped to a descriptive color name to help users understand the relationship between the hex values and actual colors. The color naming system:
+
+- Provides human-readable names for all possible date-generated colors
+- Maps RGB values to their closest named color from a comprehensive color database
+- Enhances the educational value by helping users understand how hex codes translate to colors
 
 ## Requirements
 
