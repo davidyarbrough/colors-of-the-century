@@ -44,9 +44,11 @@ These special days are displayed with a diagonal split showing both colors, enha
 
 Each hex color code is mapped to a descriptive color name to help users understand the relationship between the hex values and actual colors. The color naming system:
 
-- Provides human-readable names for all possible date-generated colors
-- Maps RGB values to their closest named color from a comprehensive color database
-- Enhances the educational value by helping users understand how hex codes translate to colors
+- Uses the W3C standard CSS color names as defined in the CSS Color Module Level 4
+- Automatically finds the nearest standard color for any hex code generated from dates
+- Provides human-readable names that are consistent with web standards
+- Enhances the educational value by helping users understand how hex codes translate to standardized color names
+- Includes 148 named colors from the official CSS specification
 
 ## Requirements
 
