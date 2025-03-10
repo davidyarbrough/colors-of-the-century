@@ -257,7 +257,7 @@ function App() {
                 position="bottom"
               >
                 bifecta
-              </Popover> is {nextBifecta ? `${nextBifecta.month === 2 ? 'February' : 'December'} ${nextBifecta.year}` : 'loading...'} 
+              </Popover> is {nextBifecta ? `${nextBifecta.month === 2 ? 'February' : 'December'} ${nextBifecta.year} ` : 'loading...'} 
               {nextBifecta?.inProgress ? '(happening now!)' : '(coming soon)'}
             </small>
           </p>
