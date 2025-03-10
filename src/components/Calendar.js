@@ -1,7 +1,6 @@
 import React from 'react';
 import Month from './Month';
 import '../styles/Calendar.css';
-import { getColorCode, getAltColorCode, hasBicolorDisplay } from '../utils/colorUtils';
 
 /**
  * Calendar component that displays all months of a year
