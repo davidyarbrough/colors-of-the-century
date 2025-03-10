@@ -21,18 +21,18 @@ The application supports three different date formats, each generating unique co
 
 ### 1. Normal Format (DDMMYY)
 - Day followed by month followed by year
-- Example: January 1, 2025 would be colored `#010125`
-- Bicolor format for special days: `#DMONYR` (e.g., February 3, 2025 would have an alternate color of `#3FEB25`)
+- Example: February 1, 2025 would be colored `#010225`
+- Bicolor format for special days: `#DMMMYY` (e.g., February 1, 2025 would have an alternate color of `#1FEB25`)
 
 ### 2. American Format (MMDDYY)
 - Month followed by day followed by year
-- Example: January 1, 2025 would be colored `#010125`
-- Bicolor format for special days: `#MMMDYR` (e.g., February 3, 2025 would have an alternate color of `#FEB325`)
+- Example: February 1, 2025 would be colored `#020125`
+- Bicolor format for special days: `#MMMDYY` (e.g., February 1, 2025 would have an alternate color of `#FEB125`)
 
 ### 3. Lexical Format (YYMMDD)
 - Year followed by month followed by day
-- Example: January 1, 2025 would be colored `#250101`
-- Bicolor format for special days: `#YYMMMd` (e.g., February 3, 2025 would have an alternate color of `#25FEB3`)
+- Example: February 1, 2025 would be colored `#250201`
+- Bicolor format for special days: `#YYMMMD` (e.g., February 1, 2025 would have an alternate color of `#25FEB1`)
 
 ## Special Bicolor Days
 
