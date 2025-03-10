@@ -51,11 +51,12 @@ A 'bifecta' occurs when a bicolor period (the first 9 days of February or Decemb
 
 Each hex color code is mapped to a descriptive color name to help users understand the relationship between the hex values and actual colors. The color naming system:
 
-- Uses the W3C standard CSS color names as defined in the CSS Color Module Level 4
-- Automatically finds the nearest standard color for any hex code generated from dates
-- Provides human-readable names that are consistent with web standards
-- Enhances the educational value by helping users understand how hex codes translate to standardized color names
-- Includes 148 named colors from the official CSS specification
+- Uses AI-generated color names specifically designed for date-based colors
+- Groups colors by decade themes with each having its own color palette
+- Names reflect thematic elements rather than temporal references
+- Automatically assigns the most appropriate name for any date-generated hex code
+- Enhances the educational value by helping users understand the relationship between dates and colors
+- Provides intuitive, descriptive names like "Shadow," "Charcoal," "Forest," and "Emerald"
 
 ## Requirements
 
@@ -105,16 +106,27 @@ Each hex color code is mapped to a descriptive color name to help users understa
 ```
 colors-of-the-century/
 ├── public/             # Static files
-│   └── index.html      # HTML template
+│   ├── index.html      # HTML template
+│   └── 404.html        # Custom 404 page for GitHub Pages
 ├── src/                # Source code
 │   ├── components/     # React components
 │   │   ├── Calendar.js # Main calendar component
 │   │   ├── Month.js    # Individual month component
+│   │   ├── FormatSelector.js # Date format selection component
+│   │   ├── Popover.js  # Reusable popover component for additional information
 │   │   └── YearInput.js# Year input form
 │   ├── styles/         # CSS styles
+│   │   ├── FormatSelector.css # Format selector styles
+│   │   ├── Popover.css # Popover component styles
+│   │   └── YearInput.css # Year input styles
+│   ├── utils/          # Utility functions
+│   │   └── colorNameMapper.js # Maps hex codes to color names
 │   ├── App.js          # Main application component
 │   ├── App.css         # Main application styles
 │   ├── index.js        # Application entry point
 │   └── index.css       # Global styles
+├── .github/workflows/  # GitHub Actions workflows
+│   └── deploy.yml      # Automatic deployment to GitHub Pages
+├── constitution.md     # Project principles and guidelines
 └── package.json        # Project dependencies and scripts
 ```
