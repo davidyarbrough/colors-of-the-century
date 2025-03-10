@@ -1,0 +1,92 @@
+.popover-container {
+  position: relative;
+  display: inline-block;
+}
+
+.popover-trigger {
+  cursor: pointer;
+  text-decoration: underline dotted;
+  color: #4a6fa5;
+  font-weight: 500;
+}
+
+.popover-trigger:hover {
+  color: #3a5a80;
+}
+
+.popover-content {
+  position: absolute;
+  background-color: white;
+  padding: 10px 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-width: 280px;
+  font-size: 0.85rem;
+  color: #333;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.popover-top {
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.popover-bottom {
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.popover-left {
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.popover-right {
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.popover-arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  transform: rotate(45deg);
+}
+
+.popover-arrow-top {
+  bottom: -5px;
+  left: 50%;
+  margin-left: -5px;
+}
+
+.popover-arrow-bottom {
+  top: -5px;
+  left: 50%;
+  margin-left: -5px;
+}
+
+.popover-arrow-left {
+  right: -5px;
+  top: 50%;
+  margin-top: -5px;
+}
+
+.popover-arrow-right {
+  left: -5px;
+  top: 50%;
+  margin-top: -5px;
+}
+
+@media (max-width: 480px) {
+  .popover-content {
+    max-width: 220px;
+    font-size: 0.8rem;
+  }
+}

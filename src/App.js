@@ -1,17 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Calendar from './components/Calendar';
 import YearInput from './components/YearInput';
 import FormatSelector from './components/FormatSelector';
+import Popover from './components/Popover';
 import getColorName from './utils/colorNameMapper';
 
 /**
  * Main application component
  */
+/**
+ * Calculate the next bifecta (bicolor period with two weekends)
+ * @returns {Object} The next bifecta details: month, year, and days included
+ */
+const calculateNextBifecta = () => {
+  // Use the current local date
+  const today = new Date();
+  
+  // Start searching from the current year
+  let currentYear = today.getFullYear();
+  
+  // Check up to 10 years in the future
+  for (let yearOffset = 0; yearOffset < 10; yearOffset++) {
+    const year = currentYear + yearOffset;
+    
+    // Check February 1st and December 1st of each year
+    const checkMonths = [1, 11]; // February (1) and December (11) in JS
+    
+    for (const month of checkMonths) {
+      // Create date object for the 1st of the month
+      const firstOfMonth = new Date(year, month, 1);
+      
+      // Skip past dates
+      if (firstOfMonth < today) {
+        continue;
+      }
+      
+      // If the 1st falls on a Saturday (day 6), it's a bifecta
+      // This guarantees two full weekends in the 9-day bicolor period
+      if (firstOfMonth.getDay() === 6) {
+        // Check if it's happening right now
+        const startDate = new Date(year, month, 1);
+        const endDate = new Date(year, month, 9);
+        const isNow = startDate <= today && today <= endDate;
+        
+        return {
+          month: month + 1, // Convert from JS 0-based months
+          year,
+          inProgress: isNow,
+          isUpcoming: !isNow
+        };
+      }
+    }
+  }
+  
+  // Default fallback (should never reach here with 10-year search)
+  return { month: 2, year: currentYear + 10, isUpcoming: true };
+};
+
 function App() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [selectedDate, setSelectedDate] = useState(null);
   const [format, setFormat] = useState('normal'); // 'normal' or 'american'
+  const [nextBifecta, setNextBifecta] = useState(null);
 
   const handleYearChange = (newYear) => {
     setYear(newYear);
@@ -26,6 +77,11 @@ function App() {
   const handleDateSelect = (day, month) => {
     setSelectedDate({ day, month, year });
   };
+  
+  // Calculate next bifecta when component mounts or year changes
+  useEffect(() => {
+    setNextBifecta(calculateNextBifecta());
+  }, []);
 
   /**
    * Generate color code based on date and selected format
@@ -91,7 +147,17 @@ function App() {
             Each day is colored with its hex code in 
             {format === 'normal' ? '#DDMMYY' : format === 'american' ? '#MMDDYY' : '#YYMMDD'} format
             <br />
-            <small>The first 9 days of February and December have two color representations!</small>
+            <small>The first 9 days of February and December have two color representations! These periods are known as the winter bicolors.</small>
+            <br/>
+            <small>
+              The next <Popover 
+                content="A 'bifecta' occurs when a bicolor period (the first 9 days of February or December) contains two full weekends. These rare occurrences are considered periods of special celebration and renewal in the Colors of the Century calendar."
+                position="bottom"
+              >
+                bifecta
+              </Popover> is {nextBifecta ? `${nextBifecta.month === 2 ? 'February' : 'December'} ${nextBifecta.year}` : 'loading...'} 
+              {nextBifecta?.inProgress ? '(happening now!)' : '(coming soon)'}
+            </small>
           </p>
         </header>
 
