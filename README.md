@@ -89,7 +89,7 @@ Each hex color code is mapped to a descriptive color name to help users understa
 ## Usage
 
 - Enter a year in the input field (between 0 and 9999)
-- Click "Generate Calendar" to display the calendar for that year
+- Click "Go" to display the calendar for that year
 - Click on any day to see its date and corresponding color code
 - The color sample will update to show the exact color
 

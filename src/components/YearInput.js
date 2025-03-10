@@ -35,7 +35,7 @@ const YearInput = ({ year, onYearChange }) => {
           value={inputValue}
           onChange={handleInputChange}
         />
-        <button type="submit">Generate Calendar</button>
+        <button type="submit">Go</button>
       </form>
       {error && <div className="error-message">{error}</div>}
     </div>
