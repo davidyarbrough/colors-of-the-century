@@ -89,13 +89,13 @@ const About = () => {
             </li>
           </ul>
           <p>
-            These days are displayed with a diagonal split showing both color interpretations -
+            These days are displayed with a diagonal split showing both color formats -
             the alternative color in the top-left and the standard color in the bottom-right.
             When you click on these days, the color information panel will show both color codes.
           </p>
           <p>
-            The bicolor periods were chosen for February and December as they create particularly
-            interesting color combinations with their month abbreviations.
+            The bicolor periods were chosen for February and December as they have three-letter abbreviations
+            that are still valid hexadecimal characters.
           </p>
         </section>
 
@@ -104,10 +104,10 @@ const About = () => {
           <p>
             A "Bifecta" is a special period that occurs when the first day of February or December
             falls on a Saturday. This means that the bicolor period (the first 9 days of these months)
-            includes two full weekends, creating a visually unique span of days.
+            includes two full weekends.
           </p>
           <p>
-            During a Bifecta, you'll see a total of 8 weekend days (4 Saturdays and 4 Sundays) all
+            During a Bifecta, you'll see a total of 4 weekend days (2 Saturdays and 2 Sundays) all
             displaying bicolor representations. This creates a particularly colorful visual pattern
             in the calendar.
           </p>
