@@ -2,6 +2,8 @@
 
 A calendar visualization application that displays each day colored with a hex code derived from its date, supporting multiple date formats.
 
+**[View Live Demo](https://davidyarbrough.github.io/colors-of-the-century)**
+
 ## Description
 
 This application allows users to:
@@ -10,7 +12,8 @@ This application allows users to:
 - View a calendar for that year
 - See each day colored with its unique hex color code based on the date format
 - Click on days to see the exact color code and color name
-- Experience special bicolor days for the first 9 days of February and December
+- Experience special bicolor days for the first 9 days of February and December (the winter bicolors)
+- Learn about special 'bifecta' periods when bicolor days include two full weekends
 
 ## Date Formats and Color Mapping
 
@@ -39,6 +42,10 @@ The first 9 days of February and December have two color representations:
 2. **Alternative Format**: Using a special format that includes the month name abbreviation
 
 These special days are displayed with a diagonal split showing both colors, enhancing the visual experience and educational value of the application.
+
+### Bifectas
+
+A 'bifecta' occurs when a bicolor period (the first 9 days of February or December) contains two full weekends. This happens when the 1st of the month falls on a Saturday, creating a unique 9-day stretch with both weekends fully contained within the winter bicolors. According to Colors of the Century traditions, bifectas are periods of special celebration, creativity, and renewal.
 
 ## Color Naming System
 

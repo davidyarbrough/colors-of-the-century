@@ -2,6 +2,7 @@
   "name": "colors-of-the-century",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://davidyarbrough.github.io/colors-of-the-century",
   "dependencies": {
     "nearest-color": "^0.4.4",
     "react": "^18.2.0",

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Colors of the Century - Page Not Found</title>
+  <script>
+    // Single Page App redirect script
+    // This handles GitHub Pages routing issues
+    // https://github.com/rafgraph/spa-github-pages
+    var pathSegmentsToKeep = 1;
+
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
+  </script>
+</head>
+<body>
+  <h2>Redirecting...</h2>
+  <p>If you are not redirected automatically, <a href="https://davidyarbrough.github.io/colors-of-the-century">click here to go to the Colors of the Century homepage</a>.</p>
+</body>
+</html>
