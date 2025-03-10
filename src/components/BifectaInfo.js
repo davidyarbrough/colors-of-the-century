@@ -1,5 +1,4 @@
 import React from 'react';
-import Popover from './Popover';
 
 /**
  * BifectaInfo - Displays information about the next bifecta
@@ -10,7 +9,7 @@ import Popover from './Popover';
 const BifectaInfo = ({ nextBifecta }) => {
   return (
     <small>
-      The next <a href="#/about#Bifecta" style={{ color: 'inherit', textDecoration: 'underline', fontWeight: 'bold' }}>
+      The next <a href="#/about?section=bifecta" style={{ color: 'inherit', textDecoration: 'underline', fontWeight: 'bold' }}>
         bifecta
       </a> is {nextBifecta ? `${nextBifecta.month === 2 ? 'February' : 'December'} ${nextBifecta.year} ` : 'loading...'} 
       {nextBifecta?.inProgress ? '(happening now!)' : '(coming soon)'}

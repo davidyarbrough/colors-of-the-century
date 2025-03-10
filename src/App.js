@@ -26,8 +26,9 @@ function CalendarView({ year, setYear, selectedDate, setSelectedDate, format, se
             Colors of the Century
           </h1>
           <p className="app-description">
-          <small> Each day is colored with its hex code in {format === 'normal' ? '#DDMMYY' : format === 'american' ? '#MMDDYY' : '#YYMMDD'} format
+          <small> Each day is colored with its hex code in {format === 'normal' ? '#DDMMYY' : format === 'american' ? '#MMDDYY' : '#YYMMDD'} format.
             The first 9 days of February and December have two color representations! These periods are known as the winter bicolors.</small>
+            <br/>
             <BifectaInfo nextBifecta={nextBifecta} />
           </p>
         </header>
@@ -35,7 +36,6 @@ function CalendarView({ year, setYear, selectedDate, setSelectedDate, format, se
         <div className="controls">
           <FormatSelector format={format} onFormatChange={handleFormatChange} />
           <YearInput year={year} onYearChange={handleYearChange} />
-          <a href="#/about" className="about-link">About</a>
         </div>
 
         <ColorInfo selectedDate={selectedDate} format={format} />

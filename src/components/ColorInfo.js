@@ -19,40 +19,47 @@ const ColorInfo = ({ selectedDate, format }) => {
   
   return (
     <div className="color-info">
-      <div className="date-display">
-        Date: {day.toString().padStart(2, '0')}/
-        {month.toString().padStart(2, '0')}/
-        {year}
-      </div>
-      <div className="color-display">
-        <div className="color-info-row">
-          <div>Color: {colorCode}</div>
-          <div className="color-name">{getColorName(colorCode)}</div>
-        </div>
-        {altColorCode && (
-          <div className="color-info-row alt-color-display">
-            <div>Bi Color: {altColorCode}</div>
-            <div className="color-name">{getColorName(altColorCode)}</div>
+      <div className="color-info-layout">
+        <div className="date-and-sample">
+          <div className="date-display">
+            {day.toString().padStart(2, '0')}/
+            {month.toString().padStart(2, '0')}/
+            {year}
           </div>
-        )}
-      </div>
-      {hasBicolorDisplay(day, month) ? (
-        <div className="bicolor-sample">
-          <div 
-            className="alt-color-sample" 
-            style={{ backgroundColor: altColorCode }}
-          />
-          <div 
-            className="primary-color-sample" 
-            style={{ backgroundColor: colorCode }}
-          />
+          {hasBicolorDisplay(day, month) ? (
+            <div className="bicolor-sample">
+              <div 
+                className="alt-color-sample" 
+                style={{ backgroundColor: altColorCode }}
+              />
+              <div 
+                className="primary-color-sample" 
+                style={{ backgroundColor: colorCode }}
+              />
+            </div>
+          ) : (
+            <div 
+              className="color-sample" 
+              style={{ backgroundColor: colorCode }}
+            />
+          )}
         </div>
-      ) : (
-        <div 
-          className="color-sample" 
-          style={{ backgroundColor: colorCode }}
-        />
-      )}
+        
+        <div className="color-display">
+          <div className="color-info-row">
+            <div className="color-label">Color:</div>
+            <div className="color-code">{colorCode}</div>
+            <div className="color-name">{getColorName(colorCode)}</div>
+          </div>
+          {altColorCode && (
+            <div className="color-info-row alt-color-display">
+              <div className="color-label">Bi Color:</div>
+              <div className="color-code">{altColorCode}</div>
+              <div className="color-name">{getColorName(altColorCode)}</div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

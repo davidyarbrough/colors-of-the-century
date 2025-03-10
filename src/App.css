@@ -73,38 +73,58 @@
 
 .color-info {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   margin: 8px 0 5px;
   padding: 8px 10px;
   background-color: transparent;
-  flex-wrap: wrap;
-  min-height: 80px; /* Changed to min-height for flexibility */
+  min-height: 60px; /* Reduced height for more compact layout */
   max-width: 100%;
+  flex-wrap: wrap;
 }
 
-.date-display, .color-display {
-  margin: 0 8px;
-  font-size: 0.9rem;
+.color-info-layout {
   display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center content vertically */
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.date-and-sample {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-display {
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .color-display {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center; /* Center content vertically */
+  gap: 4px;
 }
 
 .color-info-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 4px;
   min-height: 25px; /* Ensure consistent height for each row */
   flex-wrap: wrap;
+}
+
+.color-label {
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.color-code {
+  font-family: monospace;
+  white-space: nowrap;
 }
 
 .color-name {
@@ -114,6 +134,7 @@
   background-color: #f5f5f5;
   padding: 2px 6px;
   border-radius: 3px;
+  white-space: nowrap;
 }
 
 .alt-color-display {
@@ -169,31 +190,39 @@
 /* Media queries for responsive layout */
 @media (max-width: 768px) {
   .color-info {
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 15px;
+    padding: 8px 5px;
     min-height: auto;
-    height: auto;
   }
   
-  .date-display, .color-display {
-    margin-bottom: 8px;
-    width: 100%;
-    text-align: center;
+  .color-info-layout {
+    gap: 8px;
   }
   
-  .color-display {
-    align-items: center;
-  }
-  
-  .color-info-row {
+  .date-and-sample {
+    width: auto;
     justify-content: center;
   }
   
-  .bicolor-sample, .color-sample {
-    margin: 0 auto;
-    margin-top: 5px;
+  .color-display {
+    width: auto;
+    align-items: flex-start;
   }
+  
+  .color-info-row {
+    gap: 6px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .color-info-layout {
+    gap: 4px;
+  }
+  
+  .color-info-row {
+    justify-content: flex-start;
+  }
+}
   
   .sticky-header {
     padding-bottom: 12px;
@@ -204,4 +233,3 @@
     flex-direction: column;
     gap: 8px;
   }
-}
