@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Calendar from './components/Calendar';
 import YearInput from './components/YearInput';
@@ -6,11 +7,53 @@ import FormatSelector from './components/FormatSelector';
 import ColorInfo from './components/ColorInfo';
 import BifectaInfo from './components/BifectaInfo';
 import BackgroundManager from './components/BackgroundManager';
+import About from './components/About';
 import { calculateNextBifecta } from './utils/bifectaUtils';
 
 /**
  * Main application component
  */
+
+function CalendarView({ year, setYear, selectedDate, setSelectedDate, format, setFormat, nextBifecta, backgroundGradient, headerBackground, updateBackgroundGradient, handleYearChange, handleFormatChange, handleDateSelect }) {  
+  return (
+    <div className="app" style={{
+      background: backgroundGradient,
+      transition: 'background 0.5s ease'
+    }}>
+      <div className="sticky-header" style={{ background: headerBackground }}>
+        <header className="app-header">
+          <h1>
+            Colors of the Century
+          </h1>
+          <p className="app-description">
+          <small> Each day is colored with its hex code in {format === 'normal' ? '#DDMMYY' : format === 'american' ? '#MMDDYY' : '#YYMMDD'} format
+            The first 9 days of February and December have two color representations! These periods are known as the winter bicolors.</small>
+            <BifectaInfo nextBifecta={nextBifecta} />
+          </p>
+        </header>
+
+        <div className="controls">
+          <FormatSelector format={format} onFormatChange={handleFormatChange} />
+          <YearInput year={year} onYearChange={handleYearChange} />
+          <a href="#/about" className="about-link">About</a>
+        </div>
+
+        <ColorInfo selectedDate={selectedDate} format={format} />
+      </div>
+
+      <Calendar 
+        year={year} 
+        onDateSelect={handleDateSelect} 
+        format={format}
+        selectedDate={selectedDate}
+      />
+
+      <footer className="app-footer">
+        <p>© {new Date().getFullYear()} Colors of the Century</p>
+      </footer>
+    </div>
+  );
+}
 
 function App() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -62,42 +105,31 @@ function App() {
 
 
   return (
-    <div className="app" style={{
-      background: backgroundGradient,
-      transition: 'background 0.5s ease'
-    }}>
-      <div className="sticky-header" style={{ background: headerBackground }}>
-        <header className="app-header">
-          <h1>Colors of the Century</h1>
-          <p className="app-description">
-            Each day is colored with its hex code in 
-            {format === 'normal' ? '#DDMMYY' : format === 'american' ? '#MMDDYY' : '#YYMMDD'} format
-            <br />
-            <small>The first 9 days of February and December have two color representations! These periods are known as the winter bicolors.</small>
-            <br/>
-            <BifectaInfo nextBifecta={nextBifecta} />
-          </p>
-        </header>
-
-        <div className="controls">
-          <FormatSelector format={format} onFormatChange={handleFormatChange} />
-          <YearInput year={year} onYearChange={handleYearChange} />
-        </div>
-
-        <ColorInfo selectedDate={selectedDate} format={format} />
-      </div>
-
-      <Calendar 
-        year={year} 
-        onDateSelect={handleDateSelect} 
-        format={format}
-        selectedDate={selectedDate}
-      />
-
-      <footer className="app-footer">
-        <p>© {new Date().getFullYear()} Colors of the Century</p>
-      </footer>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/about" element={<About />} />
+        <Route 
+          path="/" 
+          element={
+            <CalendarView 
+              year={year}
+              setYear={setYear}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              format={format}
+              setFormat={setFormat}
+              nextBifecta={nextBifecta}
+              backgroundGradient={backgroundGradient}
+              headerBackground={headerBackground}
+              updateBackgroundGradient={updateBackgroundGradient}
+              handleYearChange={handleYearChange}
+              handleFormatChange={handleFormatChange}
+              handleDateSelect={handleDateSelect}
+            />
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 

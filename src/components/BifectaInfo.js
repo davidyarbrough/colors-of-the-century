@@ -10,12 +10,9 @@ import Popover from './Popover';
 const BifectaInfo = ({ nextBifecta }) => {
   return (
     <small>
-      The next <Popover 
-        content="A 'bifecta' occurs when a bicolor period (the first 9 days of February or December) contains two full weekends. This happens when the 1st of the month falls on a Saturday, creating a unique 9-day stretch with both weekends fully contained within the winter bicolors. According to Colors of the Century traditions, bifectas are periods of special celebration, creativity, and renewal."
-        position="bottom"
-      >
+      The next <a href="#/about#Bifecta" style={{ color: 'inherit', textDecoration: 'underline', fontWeight: 'bold' }}>
         bifecta
-      </Popover> is {nextBifecta ? `${nextBifecta.month === 2 ? 'February' : 'December'} ${nextBifecta.year} ` : 'loading...'} 
+      </a> is {nextBifecta ? `${nextBifecta.month === 2 ? 'February' : 'December'} ${nextBifecta.year} ` : 'loading...'} 
       {nextBifecta?.inProgress ? '(happening now!)' : '(coming soon)'}
     </small>
   );

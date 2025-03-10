@@ -16,9 +16,9 @@ const FormatSelector = ({ format, onFormatChange }) => {
         onChange={(e) => onFormatChange(e.target.value)}
         aria-label="Select date format"
       >
-        <option value="normal">Normal (day-month-year)</option>
-        <option value="lexical">Lexical (year-month-day)</option>
-        <option value="american">American (month-day-year)</option>
+        <option value="normal">Normal</option>
+        <option value="lexical">Lexical</option>
+        <option value="american">American</option>
       </select>
     </div>
   );
