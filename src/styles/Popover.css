@@ -17,14 +17,16 @@
 .popover-content {
   position: absolute;
   background-color: white;
-  padding: 10px 12px;
+  padding: 10px 16px;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 1000;
-  max-width: 280px;
+  width: max-content;
+  max-width: min(400px, 90vw);
+  min-width: 250px;
   font-size: 0.85rem;
   color: #333;
-  line-height: 1.4;
+  line-height: 1.5;
   text-align: left;
 }
 
@@ -86,7 +88,9 @@
 
 @media (max-width: 480px) {
   .popover-content {
-    max-width: 220px;
+    padding: 8px 12px;
+    min-width: 200px;
+    max-width: 85vw;
     font-size: 0.8rem;
   }
 }

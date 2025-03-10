@@ -151,7 +151,7 @@ function App() {
             <br/>
             <small>
               The next <Popover 
-                content="A 'bifecta' occurs when a bicolor period (the first 9 days of February or December) contains two full weekends. These rare occurrences are considered periods of special celebration and renewal in the Colors of the Century calendar."
+                content="A 'bifecta' occurs when a bicolor period (the first 9 days of February or December) contains two full weekends. This happens when the 1st of the month falls on a Saturday, creating a unique 9-day stretch with both weekends fully contained within the winter bicolors. According to Colors of the Century traditions, bifectas are periods of special celebration, creativity, and renewal."
                 position="bottom"
               >
                 bifecta
