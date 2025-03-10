@@ -84,62 +84,64 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>Colors of the Century</h1>
-        <p className="app-description">
-          Each day is colored with its hex code in 
-          {format === 'normal' ? '#DDMMYY' : format === 'american' ? '#MMDDYY' : '#YYMMDD'} format
-          <br />
-          <small>The first 9 days of February and December have two color representations!</small>
-        </p>
-      </header>
+      <div className="sticky-header">
+        <header className="app-header">
+          <h1>Colors of the Century</h1>
+          <p className="app-description">
+            Each day is colored with its hex code in 
+            {format === 'normal' ? '#DDMMYY' : format === 'american' ? '#MMDDYY' : '#YYMMDD'} format
+            <br />
+            <small>The first 9 days of February and December have two color representations!</small>
+          </p>
+        </header>
 
-      <div className="controls">
-        <FormatSelector format={format} onFormatChange={handleFormatChange} />
-        <YearInput year={year} onYearChange={handleYearChange} />
-      </div>
+        <div className="controls">
+          <FormatSelector format={format} onFormatChange={handleFormatChange} />
+          <YearInput year={year} onYearChange={handleYearChange} />
+        </div>
 
-      <div className="color-info">
-        {selectedDate ? (
-          <>
-            <div className="date-display">
-              Date: {selectedDate.day.toString().padStart(2, '0')}/
-              {selectedDate.month.toString().padStart(2, '0')}/
-              {selectedDate.year}
-            </div>
-            <div className="color-display">
-              <div className="color-info-row">
-                <div>Color: {getColorCode(selectedDate.day, selectedDate.month, selectedDate.year)}</div>
-                <div className="color-name">{getColorName(getColorCode(selectedDate.day, selectedDate.month, selectedDate.year))}</div>
+        <div className="color-info">
+          {selectedDate ? (
+            <>
+              <div className="date-display">
+                Date: {selectedDate.day.toString().padStart(2, '0')}/
+                {selectedDate.month.toString().padStart(2, '0')}/
+                {selectedDate.year}
               </div>
-              {hasBicolorDisplay(selectedDate.day, selectedDate.month) && (
-                <div className="color-info-row alt-color-display">
-                  <div>Bi Color: {getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year)}</div>
-                  <div className="color-name">{getColorName(getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year))}</div>
+              <div className="color-display">
+                <div className="color-info-row">
+                  <div>Color: {getColorCode(selectedDate.day, selectedDate.month, selectedDate.year)}</div>
+                  <div className="color-name">{getColorName(getColorCode(selectedDate.day, selectedDate.month, selectedDate.year))}</div>
                 </div>
-              )}
-            </div>
-            {hasBicolorDisplay(selectedDate.day, selectedDate.month) ? (
-              <div className="bicolor-sample">
+                {hasBicolorDisplay(selectedDate.day, selectedDate.month) && (
+                  <div className="color-info-row alt-color-display">
+                    <div>Bi Color: {getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year)}</div>
+                    <div className="color-name">{getColorName(getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year))}</div>
+                  </div>
+                )}
+              </div>
+              {hasBicolorDisplay(selectedDate.day, selectedDate.month) ? (
+                <div className="bicolor-sample">
+                  <div 
+                    className="alt-color-sample" 
+                    style={{ backgroundColor: getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year) }}
+                  ></div>
+                  <div 
+                    className="primary-color-sample" 
+                    style={{ backgroundColor: getColorCode(selectedDate.day, selectedDate.month, selectedDate.year) }}
+                  ></div>
+                </div>
+              ) : (
                 <div 
-                  className="alt-color-sample" 
-                  style={{ backgroundColor: getAltColorCode(selectedDate.day, selectedDate.month, selectedDate.year) }}
-                ></div>
-                <div 
-                  className="primary-color-sample" 
+                  className="color-sample" 
                   style={{ backgroundColor: getColorCode(selectedDate.day, selectedDate.month, selectedDate.year) }}
                 ></div>
-              </div>
-            ) : (
-              <div 
-                className="color-sample" 
-                style={{ backgroundColor: getColorCode(selectedDate.day, selectedDate.month, selectedDate.year) }}
-              ></div>
-            )}
-          </>
-        ) : (
-          <div>Click on a day to see its color code</div>
-        )}
+              )}
+            </>
+          ) : (
+            <div>Click on a day to see its color code</div>
+          )}
+        </div>
       </div>
 
       <Calendar 
