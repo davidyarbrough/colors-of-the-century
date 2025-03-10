@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import Calendar from './components/Calendar';
 import YearInput from './components/YearInput';
@@ -65,6 +65,66 @@ function App() {
   const [nextBifecta, setNextBifecta] = useState(null);
   const [backgroundGradient, setBackgroundGradient] = useState('');
   const [headerBackground, setHeaderBackground] = useState('#f2f2f2');
+  
+  /**
+   * Generate color code based on date and selected format
+   * @param {number} day - Day of the month
+   * @param {number} month - Month number (1-12)
+   * @param {number} year - Year
+   * @returns {string} Hex color code
+   */
+  const getColorCode = useCallback((day, month, year) => {
+    // Format day, month, and last two digits of year as two-digit numbers
+    const dayStr = day.toString().padStart(2, '0');
+    const monthStr = month.toString().padStart(2, '0');
+    const yearStr = (year % 100).toString().padStart(2, '0');
+    
+    // Create hex color code based on format
+    if (format === 'normal') {
+      return `#${dayStr}${monthStr}${yearStr}`; // DDMMYY
+    } else if (format === 'american') {
+      return `#${monthStr}${dayStr}${yearStr}`; // MMDDYY for American format
+    } else { // lexical format
+      return `#${yearStr}${monthStr}${dayStr}`; // YYMMDD for Lexical format
+    }
+  }, [format]);
+
+  /**
+   * Generate alternative color code for special days
+   * @param {number} day - Day of the month
+   * @param {number} month - Month number (1-12)
+   * @param {number} year - Year
+   * @returns {string|null} Alternative hex color code or null if not applicable
+   */
+  const getAltColorCode = useCallback((day, month, year) => {
+    // Only first 9 days of February (2) and December (12) have alternative colors
+    if ((month === 2 || month === 12) && day <= 9) {
+      const monthCode = month === 2 ? 'FEB' : 'DEC';
+      const yearStr = (year % 100).toString().padStart(2, '0');
+      
+      if (format === 'normal') {
+        // For normal format, bicolor is #DMONYR
+        return `#${day}${monthCode}${yearStr}`;
+      } else if (format === 'american') {
+        // For American format, bicolor is #MMMDYR
+        return `#${monthCode}${day}${yearStr}`;
+      } else {
+        // For Lexical format, bicolor is #YYMMMd
+        return `#${yearStr}${monthCode}${day}`;
+      }
+    }
+    return null;
+  }, [format]);
+  
+  /**
+   * Check if a day should have a bicolor display
+   * @param {number} day - Day of the month
+   * @param {number} month - Month number (1-12)
+   * @returns {boolean} True if the day has a bicolor display
+   */
+  const hasBicolorDisplay = useCallback((day, month) => {
+    return ((month === 2 || month === 12) && day <= 9);
+  }, []);
 
   const handleYearChange = (newYear) => {
     setYear(newYear);
@@ -76,36 +136,13 @@ function App() {
     setSelectedDate(null);
   };
 
-  const handleDateSelect = (day, month) => {
-    setSelectedDate({ day, month, year });
-    updateBackgroundGradient(day, month, year);
-  };
-  
-  // Calculate next bifecta when component mounts or year changes
-  useEffect(() => {
-    setNextBifecta(calculateNextBifecta());
-    
-    // Set initial background gradient based on current date
-    const today = new Date();
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth() + 1; // JS months are 0-indexed
-    const currentDay = today.getDate();
-    
-    if (currentYear === year) {
-      updateBackgroundGradient(currentDay, currentMonth, currentYear);
-    } else {
-      // If showing a different year, use a default gradient based on first day of the year
-      updateBackgroundGradient(1, 1, year);
-    }
-  }, [year, format]);
-
   /**
    * Calculate background gradient based on selected date context
    * @param {number} day - Day of the month
    * @param {number} month - Month number (1-12)
    * @param {number} year - Year
    */
-  const updateBackgroundGradient = (day, month, year) => {
+  const updateBackgroundGradient = useCallback((day, month, year) => {
     let color1, color2;
     
     // Check if the current day is a bicolor day
@@ -180,62 +217,32 @@ function App() {
     
     // Set the gradient CSS
     setBackgroundGradient(`linear-gradient(135deg, ${color1} 0%, ${color2} 100%)`);
-  };
-  
-  /**
-   * Generate color code based on date and selected format
-   * @param {number} day - Day of the month
-   * @param {number} month - Month number (1-12)
-   * @param {number} year - Year
-   * @returns {string} Hex color code
-   */
-  const getColorCode = (day, month, year) => {
-    // Format day, month, and last two digits of year as two-digit numbers
-    const dayStr = day.toString().padStart(2, '0');
-    const monthStr = month.toString().padStart(2, '0');
-    const yearStr = (year % 100).toString().padStart(2, '0');
-    
-    // Create hex color code based on format
-    if (format === 'normal') {
-      return `#${dayStr}${monthStr}${yearStr}`; // DDMMYY
-    } else if (format === 'american') {
-      return `#${monthStr}${dayStr}${yearStr}`; // MMDDYY for American format
-    } else { // lexical format
-      return `#${yearStr}${monthStr}${dayStr}`; // YYMMDD for Lexical format
-    }
-  };
+  }, [getColorCode, getAltColorCode, hasBicolorDisplay]); // Include all functions used inside
 
-  /**
-   * Generate alternative color code for special days
-   * @param {number} day - Day of the month
-   * @param {number} month - Month number (1-12)
-   * @param {number} year - Year
-   * @returns {string|null} Alternative hex color code or null if not applicable
-   */
-  const getAltColorCode = (day, month, year) => {
-    // Only first 9 days of February (2) and December (12) have alternative colors
-    if ((month === 2 || month === 12) && day <= 9) {
-      const monthCode = month === 2 ? 'FEB' : 'DEC';
-      const yearStr = (year % 100).toString().padStart(2, '0');
-      
-      if (format === 'normal') {
-        // For normal format, bicolor is #DMONYR
-        return `#${day}${monthCode}${yearStr}`;
-      } else if (format === 'american') {
-        // For American format, bicolor is #MMMDYR
-        return `#${monthCode}${day}${yearStr}`;
-      } else {
-        // For Lexical format, bicolor is #YYMMMd
-        return `#${yearStr}${monthCode}${day}`;
-      }
-    }
-    return null;
+  const handleDateSelect = (day, month) => {
+    setSelectedDate({ day, month, year });
+    updateBackgroundGradient(day, month, year);
   };
   
-  // Function to check if a day has bicolor display
-  const hasBicolorDisplay = (day, month) => {
-    return (month === 2 || month === 12) && day <= 9;
-  };
+  // Calculate next bifecta when component mounts or year changes
+  useEffect(() => {
+    setNextBifecta(calculateNextBifecta());
+    
+    // Set initial background gradient based on current date
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth() + 1; // JS months are 0-indexed
+    const currentDay = today.getDate();
+    
+    if (currentYear === year) {
+      updateBackgroundGradient(currentDay, currentMonth, currentYear);
+    } else {
+      // If showing a different year, use a default gradient based on first day of the year
+      updateBackgroundGradient(1, 1, year);
+    }
+  }, [year, format, updateBackgroundGradient]);
+  
+
 
   return (
     <div className="app" style={{
