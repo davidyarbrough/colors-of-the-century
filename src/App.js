@@ -63,6 +63,8 @@ function App() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [format, setFormat] = useState('normal'); // 'normal' or 'american'
   const [nextBifecta, setNextBifecta] = useState(null);
+  const [backgroundGradient, setBackgroundGradient] = useState('');
+  const [headerBackground, setHeaderBackground] = useState('#f2f2f2');
 
   const handleYearChange = (newYear) => {
     setYear(newYear);
@@ -76,13 +78,110 @@ function App() {
 
   const handleDateSelect = (day, month) => {
     setSelectedDate({ day, month, year });
+    updateBackgroundGradient(day, month, year);
   };
   
   // Calculate next bifecta when component mounts or year changes
   useEffect(() => {
     setNextBifecta(calculateNextBifecta());
-  }, []);
+    
+    // Set initial background gradient based on current date
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth() + 1; // JS months are 0-indexed
+    const currentDay = today.getDate();
+    
+    if (currentYear === year) {
+      updateBackgroundGradient(currentDay, currentMonth, currentYear);
+    } else {
+      // If showing a different year, use a default gradient based on first day of the year
+      updateBackgroundGradient(1, 1, year);
+    }
+  }, [year, format]);
 
+  /**
+   * Calculate background gradient based on selected date context
+   * @param {number} day - Day of the month
+   * @param {number} month - Month number (1-12)
+   * @param {number} year - Year
+   */
+  const updateBackgroundGradient = (day, month, year) => {
+    let color1, color2;
+    
+    // Check if the current day is a bicolor day
+    if (hasBicolorDisplay(day, month)) {
+      // For bicolor days, use both colors of the day
+      color1 = getColorCode(day, month, year);
+      color2 = getAltColorCode(day, month, year);
+      
+      // Create a mixed color for the header by blending white (90%) with both colors (5% each)
+      // Parse the hex values and create a blend
+      const r1 = parseInt(color1.substring(1, 3), 16);
+      const g1 = parseInt(color1.substring(3, 5), 16);
+      const b1 = parseInt(color1.substring(5, 7), 16);
+      
+      const r2 = parseInt(color2.substring(1, 3), 16);
+      const g2 = parseInt(color2.substring(3, 5), 16);
+      const b2 = parseInt(color2.substring(5, 7), 16);
+      
+      // Calculate the blended color (90% white, 5% color1, 5% color2)
+      const blendedR = Math.round(0.9 * 255 + 0.05 * r1 + 0.05 * r2);
+      const blendedG = Math.round(0.9 * 255 + 0.05 * g1 + 0.05 * g2);
+      const blendedB = Math.round(0.9 * 255 + 0.05 * b1 + 0.05 * b2);
+      
+      // Convert back to hex
+      const blendedColor = `#${blendedR.toString(16).padStart(2, '0')}${blendedG.toString(16).padStart(2, '0')}${blendedB.toString(16).padStart(2, '0')}`;
+      
+      setHeaderBackground(blendedColor);
+    } else {
+      // Get date objects for previous, current, and next day
+      const currentDate = new Date(year, month - 1, day); // JS months are 0-indexed
+      
+      // Get yesterday's date
+      const prevDate = new Date(currentDate);
+      prevDate.setDate(prevDate.getDate() - 1);
+      
+      // Get tomorrow's date
+      const nextDate = new Date(currentDate);
+      nextDate.setDate(nextDate.getDate() + 1);
+      
+      // Get color for previous day
+      const prevDay = prevDate.getDate();
+      const prevMonth = prevDate.getMonth() + 1;
+      const prevYear = prevDate.getFullYear();
+      
+      // Get color for next day
+      const nextDay = nextDate.getDate();
+      const nextMonth = nextDate.getMonth() + 1;
+      const nextYear = nextDate.getFullYear();
+      
+      // Use previous and next day colors for gradient
+      color1 = getColorCode(prevDay, prevMonth, prevYear);
+      color2 = getColorCode(nextDay, nextMonth, nextYear);
+      
+      // Get the current day's color for header accent
+      const currentColor = getColorCode(day, month, year);
+      
+      // Parse the hex value and create a blend with 90% white and 10% of the current day's color
+      const r = parseInt(currentColor.substring(1, 3), 16);
+      const g = parseInt(currentColor.substring(3, 5), 16);
+      const b = parseInt(currentColor.substring(5, 7), 16);
+      
+      // Calculate the blended color
+      const blendedR = Math.round(0.9 * 255 + 0.1 * r);
+      const blendedG = Math.round(0.9 * 255 + 0.1 * g);
+      const blendedB = Math.round(0.9 * 255 + 0.1 * b);
+      
+      // Convert back to hex
+      const blendedColor = `#${blendedR.toString(16).padStart(2, '0')}${blendedG.toString(16).padStart(2, '0')}${blendedB.toString(16).padStart(2, '0')}`;
+      
+      setHeaderBackground(blendedColor);
+    }
+    
+    // Set the gradient CSS
+    setBackgroundGradient(`linear-gradient(135deg, ${color1} 0%, ${color2} 100%)`);
+  };
+  
   /**
    * Generate color code based on date and selected format
    * @param {number} day - Day of the month
@@ -139,8 +238,11 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <div className="sticky-header">
+    <div className="app" style={{
+      background: backgroundGradient,
+      transition: 'background 0.5s ease'
+    }}>
+      <div className="sticky-header" style={{ background: headerBackground }}>
         <header className="app-header">
           <h1>Colors of the Century</h1>
           <p className="app-description">
