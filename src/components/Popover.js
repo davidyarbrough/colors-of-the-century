@@ -31,7 +31,7 @@ const Popover = ({ children, content, position = 'top' }) => {
   }, []);
 
   return (
-    <div className="popover-container" ref={popoverRef}>
+    <span className="popover-container" ref={popoverRef}>
       <span 
         className="popover-trigger" 
         onClick={handleToggle}
@@ -43,12 +43,12 @@ const Popover = ({ children, content, position = 'top' }) => {
         {children}
       </span>
       {isVisible && (
-        <div className={`popover-content popover-${position}`}>
+        <span className={`popover-content popover-${position}`}>
           {content}
-          <div className={`popover-arrow popover-arrow-${position}`}></div>
-        </div>
+          <span className={`popover-arrow popover-arrow-${position}`}></span>
+        </span>
       )}
-    </div>
+    </span>
   );
 };
 
